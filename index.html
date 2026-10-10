@@ -38,19 +38,27 @@
   .eyes { transform-box: fill-box; transform-origin: center; animation: blink 4.2s infinite; }
   @keyframes blink { 0%, 93%, 100% { transform: scaleY(1); } 95.5% { transform: scaleY(.12); } }
   @media (prefers-reduced-motion: reduce) { .eyes { animation: none; } }
+  /* Light: the app's Mist theme with the navy owl, following the visitor's OS. */
+  @media (prefers-color-scheme: light) {
+    body { background: linear-gradient(#F2F5FA, #E2E6ED) fixed; color: #4A5366; }
+    h1 { color: #1B2230; }
+    .soon { color: #0B7A5A; }
+    a { color: #1F55AE; }
+    .o-shade { fill: #2B4B84; } .o-lit { fill: #14284D; } .o-iris { fill: #16C28F; } .o-beak { fill: #E8A21E; }
+  }
 </style>
 </head>
 <body>
 <main>
   <!-- The owl from the app icon (tmp/logos/final/app/svg/ios.svg), without its tile. -->
   <svg viewBox="200 160 624 760" role="img" aria-label="Voltinel owl logo">
-    <path fill="#C2CBDC" fill-rule="evenodd" d="M227.75,317.97 277.19,182.02 388.41,317.97 635.59,317.97 746.81,182.02 796.25,317.97 512,898.82ZM338.98,478.63a86.51,86.51 0 1 0 173.02,0a86.51,86.51 0 1 0 -173.02,0ZM512,478.63a86.51,86.51 0 1 0 173.02,0a86.51,86.51 0 1 0 -173.02,0ZM457.36,559.06 465.65,555.26 558.35,555.26 566.64,559.06 512,652.89Z"/>
-    <path fill="#F2F5FA" fill-rule="evenodd" d="M227.75,317.97 277.19,182.02 388.41,317.97 512,317.97 512,898.82ZM338.98,478.63a86.51,86.51 0 1 0 173.02,0a86.51,86.51 0 1 0 -173.02,0ZM457.36,559.06 465.65,555.26 512,555.26 512,652.89Z"/>
+    <path class="o-shade" fill="#C2CBDC" fill-rule="evenodd" d="M227.75,317.97 277.19,182.02 388.41,317.97 635.59,317.97 746.81,182.02 796.25,317.97 512,898.82ZM338.98,478.63a86.51,86.51 0 1 0 173.02,0a86.51,86.51 0 1 0 -173.02,0ZM512,478.63a86.51,86.51 0 1 0 173.02,0a86.51,86.51 0 1 0 -173.02,0ZM457.36,559.06 465.65,555.26 558.35,555.26 566.64,559.06 512,652.89Z"/>
+    <path class="o-lit" fill="#F2F5FA" fill-rule="evenodd" d="M227.75,317.97 277.19,182.02 388.41,317.97 512,317.97 512,898.82ZM338.98,478.63a86.51,86.51 0 1 0 173.02,0a86.51,86.51 0 1 0 -173.02,0ZM457.36,559.06 465.65,555.26 512,555.26 512,652.89Z"/>
     <g class="eyes">
-      <path fill="#34D8A0" d="M373.58,478.63a51.91,51.91 0 1 0 103.81,0a51.91,51.91 0 1 0 -103.81,0ZM546.6,478.63a51.91,51.91 0 1 0 103.81,0a51.91,51.91 0 1 0 -103.81,0Z"/>
+      <path class="o-iris" fill="#34D8A0" d="M373.58,478.63a51.91,51.91 0 1 0 103.81,0a51.91,51.91 0 1 0 -103.81,0ZM546.6,478.63a51.91,51.91 0 1 0 103.81,0a51.91,51.91 0 1 0 -103.81,0Z"/>
       <path fill="#0B0C10" d="M403.69,478.63a21.8,21.8 0 1 0 43.6,0a21.8,21.8 0 1 0 -43.6,0ZM576.71,478.63a21.8,21.8 0 1 0 43.6,0a21.8,21.8 0 1 0 -43.6,0Z"/>
     </g>
-    <path fill="#F2C15A" d="M482.34,571.32 541.66,571.32 512,628.17Z"/>
+    <path class="o-beak" fill="#F2C15A" d="M482.34,571.32 541.66,571.32 512,628.17Z"/>
   </svg>
   <h1>Voltinel</h1>
   <p>A watchful eye on your home battery.</p>
