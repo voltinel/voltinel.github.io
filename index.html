@@ -14,12 +14,17 @@
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="/icon-192.png">
 <style>
-  html { height: 100%; }
+  /* Fixel Display by MacPaw (official v1.211, SIL OFL 1.1: fonts/OFL.txt), the app's typeface. */
+  @font-face { font-family: "Fixel Display"; font-weight: 400; font-display: swap; src: url(fonts/FixelDisplay-Regular.woff2) format("woff2"); }
+  @font-face { font-family: "Fixel Display"; font-weight: 600; font-display: swap; src: url(fonts/FixelDisplay-SemiBold.woff2) format("woff2"); }
+  @font-face { font-family: "Fixel Display"; font-weight: 700; font-display: swap; src: url(fonts/FixelDisplay-Bold.woff2) format("woff2"); }
+  /* The app's stylistic sets: ss01-05, 07, 08, 10, 11. */
+  html { height: 100%; font-feature-settings: "ss01","ss02","ss03","ss04","ss05","ss07","ss08","ss10","ss11"; }
   body {
     min-height: 100%; margin: 0;
     display: grid; place-content: center; text-align: center;
     background: linear-gradient(#232B3D, #0B0C10) fixed;
-    color: #C2CBDC; font: 18px/1.5 system-ui, -apple-system, "Segoe UI", sans-serif;
+    color: #C2CBDC; font: 18px/1.5 "Fixel Display", system-ui, -apple-system, "Segoe UI", sans-serif;
   }
   svg { width: 160px; margin: 0 auto 1rem; }
   h1 { margin: 0; color: #F2F5FA; font-size: 3rem; letter-spacing: .02em; }
