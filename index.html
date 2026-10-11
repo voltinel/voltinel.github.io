@@ -55,8 +55,8 @@
     <path class="o-shade" fill="#C2CBDC" fill-rule="evenodd" d="M227.75,317.97 277.19,182.02 388.41,317.97 635.59,317.97 746.81,182.02 796.25,317.97 512,898.82ZM338.98,478.63a86.51,86.51 0 1 0 173.02,0a86.51,86.51 0 1 0 -173.02,0ZM512,478.63a86.51,86.51 0 1 0 173.02,0a86.51,86.51 0 1 0 -173.02,0ZM457.36,559.06 465.65,555.26 558.35,555.26 566.64,559.06 512,652.89Z"/>
     <path class="o-lit" fill="#F2F5FA" fill-rule="evenodd" d="M227.75,317.97 277.19,182.02 388.41,317.97 512,317.97 512,898.82ZM338.98,478.63a86.51,86.51 0 1 0 173.02,0a86.51,86.51 0 1 0 -173.02,0ZM457.36,559.06 465.65,555.26 512,555.26 512,652.89Z"/>
     <g class="eyes">
-      <path class="o-iris" fill="#34D8A0" d="M373.58,478.63a51.91,51.91 0 1 0 103.81,0a51.91,51.91 0 1 0 -103.81,0ZM546.6,478.63a51.91,51.91 0 1 0 103.81,0a51.91,51.91 0 1 0 -103.81,0Z"/>
-      <path fill="#0B0C10" d="M403.69,478.63a21.8,21.8 0 1 0 43.6,0a21.8,21.8 0 1 0 -43.6,0ZM576.71,478.63a21.8,21.8 0 1 0 43.6,0a21.8,21.8 0 1 0 -43.6,0Z"/>
+      <path id="iris" class="o-iris" fill="#34D8A0" d="M373.58,478.63a51.91,51.91 0 1 0 103.81,0a51.91,51.91 0 1 0 -103.81,0ZM546.6,478.63a51.91,51.91 0 1 0 103.81,0a51.91,51.91 0 1 0 -103.81,0Z"/>
+      <path id="pupil" fill="#0B0C10" d="M403.69,478.63a21.8,21.8 0 1 0 43.6,0a21.8,21.8 0 1 0 -43.6,0ZM576.71,478.63a21.8,21.8 0 1 0 43.6,0a21.8,21.8 0 1 0 -43.6,0Z"/>
     </g>
     <path class="o-beak" fill="#F2C15A" d="M482.34,571.32 541.66,571.32 512,628.17Z"/>
   </svg>
@@ -66,5 +66,34 @@
   <p class="soon">Coming soon</p>
   <p><a href="mailto:contact@voltinel.app">contact@voltinel.app</a> · <a href="https://github.com/voltinel">GitHub</a></p>
 </main>
+<script>
+  // The owl looks at the pointer (or a finger): the pupils move up to 20 units inside the iris (51.9) and the irises a
+  // third of that, eased; with no pointer they drift back to the middle. No loop runs while the eyes are still, and none
+  // at all when the visitor asks for reduced motion.
+  (() => {
+    if (matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    const svg = document.querySelector("svg"), pupil = document.getElementById("pupil"), iris = document.getElementById("iris");
+    const MAX = 20, REACH = 320;        // travel in SVG units; pointer distance (px) for full travel
+    let tx = 0, ty = 0, x = 0, y = 0, raf = 0;
+    const draw = () => {
+      x += (tx - x) * .14; y += (ty - y) * .14;                          // ease toward the target
+      pupil.setAttribute("transform", `translate(${x.toFixed(2)} ${y.toFixed(2)})`);
+      iris.setAttribute("transform", `translate(${(x / 3).toFixed(2)} ${(y / 3).toFixed(2)})`);
+      raf = Math.abs(tx - x) + Math.abs(ty - y) > .05 ? requestAnimationFrame(draw) : 0;  // stop once settled
+    };
+    const aim = (nx, ny) => { tx = nx; ty = ny; if (!raf) raf = requestAnimationFrame(draw); };
+    const look = e => {
+      const ctm = svg.getScreenCTM(); if (!ctm) return;
+      const p = new DOMPoint(512, 478.63).matrixTransform(ctm);          // between the eyes, on screen
+      const dx = e.clientX - p.x, dy = e.clientY - p.y, d = Math.hypot(dx, dy) || 1, k = Math.min(d / REACH, 1) * MAX / d;
+      aim(dx * k, dy * k);
+    };
+    addEventListener("pointermove", look, { passive: true });
+    addEventListener("pointerdown", look, { passive: true });
+    document.documentElement.addEventListener("pointerleave", () => aim(0, 0));      // the pointer left the page
+    addEventListener("pointerup", e => { if (e.pointerType !== "mouse") setTimeout(() => aim(0, 0), 1200); });  // a lifted finger
+    addEventListener("blur", () => aim(0, 0));
+  })();
+</script>
 </body>
 </html>
